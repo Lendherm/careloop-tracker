@@ -4,10 +4,9 @@ CareLoop Tracker follows a screening result from the day it is issued until the 
 
 ## Team Members
 
-- Luis Emilio Nathanael De la rosa Meneses (`Lendherm`) — add remaining teammates here
-- Rebeca Arredondo (`rarredondo9`) — confirm GitHub usernames for all members
-- _Teammate 3 — add name + GitHub_
-- _Teammate 4 — add name + GitHub_
+- Luis Emilio Nathanael De la rosa Meneses (`Lendherm`)
+- Rebeca Arredondo (`rarredondo9`) — https://github.com/rarredondo9/wdd430-portfolio
+- Chawanangwa Gondwe (`Chagon-Nehe`) — https://github.com/Chagon-Nehe/wdd430-portfolio
 
 ## Stack
 
