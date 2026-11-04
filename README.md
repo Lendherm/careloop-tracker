@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CareLoop Tracker
+
+CareLoop Tracker follows a screening result from the day it is issued until the patient has been treated or the case is closed. Each case has one named owner; overdue, rejected, and unassigned work is listed for coordinators to chase.
+
+## Team Members
+
+- Luis Emilio Nathanael De la rosa Meneses (`Lendherm`) — add remaining teammates here
+- Rebeca Arredondo (`rarredondo9`) — confirm GitHub usernames for all members
+- _Teammate 3 — add name + GitHub_
+- _Teammate 4 — add name + GitHub_
+
+## Stack
+
+- Next.js (App Router)
+- TypeScript (strict)
+- Tailwind CSS
+- Auth.js v5 (planned) / Clerk alternative
+- PostgreSQL + Prisma (planned)
+- Vercel hosting
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run lint
+npm run format
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Workflow
 
-## Learn More
+- `main` is protected — no direct pushes
+- Work on feature branches (`feature/...`)
+- Open a Pull Request; at least one teammate must review before merge
+- Track work on the GitHub Project board
 
-To learn more about Next.js, take a look at the following resources:
+## Documentation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Project Constitution](docs/constitution.md)
+- [Project Specification](docs/specification.md)
+- [Contributing / Branching](CONTRIBUTING.md)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Known Issues / Next Steps
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Auth, database, and CRUD features start in Week 03
+- Invite all teammates as repository collaborators
+- Protect `main` in GitHub Settings → Branches
