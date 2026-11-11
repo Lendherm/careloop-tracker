@@ -43,10 +43,16 @@ npm run build
 
 - [Project Constitution](docs/constitution.md)
 - [Project Specification](docs/specification.md)
+- [Architecture & Design (W03)](docs/architecture-and-design.md)
 - [Contributing / Branching](CONTRIBUTING.md)
+- [Copilot instructions](.github/copilot-instructions.md)
+
+## Project Board
+
+https://github.com/users/Lendherm/projects/1
 
 ## Known Issues / Next Steps
 
-- Auth, database, and CRUD features start in Week 03
-- Invite all teammates as repository collaborators
+- Week 04 milestone: Auth, Profile, Create case, Cases list/detail
+- Invite all teammates as repository collaborators if not already added
 - Protect `main` in GitHub Settings → Branches
