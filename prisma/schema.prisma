@@ -1,0 +1,130 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  coordinator
+  clinician
+  lab_staff
+}
+
+enum CaseStatus {
+  open
+  in_progress
+  referred
+  treated
+  closed
+}
+
+enum ReferralStatus {
+  pending
+  accepted
+  rejected
+  cancelled
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  passwordHash  String?
+  role          Role      @default(clinician)
+  org           String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts Account[]
+  sessions Session[]
+
+  ownedCases      Case[]           @relation("CaseOwner")
+  closedCases     Case[]           @relation("CaseClosedBy")
+  sentReferrals   Referral[]       @relation("ReferralFrom")
+  receivedReferrals Referral[]     @relation("ReferralTo")
+  timelineEvents  TimelineEvent[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Case {
+  id             String     @id @default(cuid())
+  patientCode    String
+  resultIssuedAt DateTime
+  status         CaseStatus @default(open)
+  ownerId        String?
+  closureNote    String?
+  closedById     String?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  owner      User?           @relation("CaseOwner", fields: [ownerId], references: [id])
+  closedBy   User?           @relation("CaseClosedBy", fields: [closedById], references: [id])
+  referrals  Referral[]
+  timeline   TimelineEvent[]
+}
+
+model Referral {
+  id         String         @id @default(cuid())
+  caseId     String
+  fromUserId String
+  toUserId   String
+  status     ReferralStatus @default(pending)
+  notes      String?
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+
+  case     Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  fromUser User @relation("ReferralFrom", fields: [fromUserId], references: [id])
+  toUser   User @relation("ReferralTo", fields: [toUserId], references: [id])
+}
+
+model TimelineEvent {
+  id          String   @id @default(cuid())
+  caseId      String
+  type        String
+  message     String
+  createdById String?
+  createdAt   DateTime @default(now())
+
+  case      Case  @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  createdBy User? @relation(fields: [createdById], references: [id])
+}
