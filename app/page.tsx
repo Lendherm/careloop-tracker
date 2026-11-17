@@ -1,26 +1,32 @@
-export default function Home() {
+import Link from "next/link";
+
+export default function HomePage() {
   return (
-    <main className="mx-auto flex min-h-screen max-w-3xl flex-col justify-center gap-6 px-6 py-16">
-      <p className="text-sm font-semibold uppercase tracking-wide text-sky-800">
-        WDD 430 Team Project
+    <main className="mx-auto max-w-5xl px-4 py-16">
+      <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-[#0F6B6B]">
+        CareLoop Tracker
       </p>
-      <h1 className="text-4xl font-bold text-slate-900">CareLoop Tracker</h1>
-      <p className="text-lg text-slate-700">
-        Follow a screening result from the day it is issued until treatment or
-        closure. Every case has one named owner; overdue, rejected, and
-        unassigned work is listed for coordinators to chase.
+      <h1 className="max-w-2xl text-4xl font-bold tracking-tight text-[#1F2933]">
+        Follow every screening result until treatment or closure.
+      </h1>
+      <p className="mt-4 max-w-2xl text-lg text-[#6B7280]">
+        Each case has one named owner. Coordinators chase overdue, rejected, and
+        unassigned work across the care loop.
       </p>
-      <ul className="list-disc space-y-2 pl-5 text-slate-700">
-        <li>Roles: coordinator, clinician, lab staff</li>
-        <li>Cases + timeline from result issued to closure</li>
-        <li>Referrals with accept / reject</li>
-        <li>Coordinator chase queue and simple dashboard metrics</li>
-      </ul>
-      <p className="text-sm text-slate-600">
-        Scaffold ready for Week 03 implementation. Project docs live in{" "}
-        <code>docs/specification.md</code> and <code>docs/constitution.md</code>
-        .
-      </p>
+      <div className="mt-8 flex flex-wrap gap-3">
+        <Link
+          href="/register"
+          className="rounded-md bg-[#0F6B6B] px-5 py-2.5 font-medium text-white hover:bg-[#0c5a5a]"
+        >
+          Get started
+        </Link>
+        <Link
+          href="/login"
+          className="rounded-md border border-slate-300 bg-white px-5 py-2.5 font-medium text-[#1F2933] hover:bg-slate-50"
+        >
+          Sign in
+        </Link>
+      </div>
     </main>
   );
 }
