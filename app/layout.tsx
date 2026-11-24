@@ -9,10 +9,25 @@ const sourceSans = Source_Sans_3({
   variable: "--font-source-sans",
 });
 
+const siteDescription =
+  "Track screening follow-up ownership from result issue to treatment or closure.";
+
 export const metadata: Metadata = {
   title: "CareLoop Tracker",
-  description:
-    "Track screening follow-up ownership from result issue to treatment or closure.",
+  description: siteDescription,
+  openGraph: {
+    title: "CareLoop Tracker",
+    description: siteDescription,
+    url: "https://github.com/Lendherm/careloop-tracker",
+    siteName: "CareLoop Tracker",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "CareLoop Tracker",
+    description: siteDescription,
+  },
 };
 
 export default function RootLayout({
