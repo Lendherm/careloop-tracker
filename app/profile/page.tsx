@@ -1,39 +1,36 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { logout } from "@/lib/actions/auth";
+import ProfileForm from "@/components/ProfileForm";
+import { prisma } from "@/lib/prisma";
+import type { Role } from "@/lib/types";
 
 export default async function ProfilePage() {
   const session = await auth();
-  if (!session?.user) {
+  if (!session?.user?.id) {
+    redirect("/login");
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+  });
+
+  if (!user) {
     redirect("/login");
   }
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10">
-      <h1 className="mb-6 text-3xl font-bold text-[#1F2933]">Profile</h1>
-      <dl className="space-y-4 rounded-lg border border-slate-200 bg-white p-6">
-        <div>
-          <dt className="text-sm font-medium text-[#6B7280]">Name</dt>
-          <dd className="text-lg text-[#1F2933]">{session.user.name}</dd>
-        </div>
-        <div>
-          <dt className="text-sm font-medium text-[#6B7280]">Email</dt>
-          <dd className="text-lg text-[#1F2933]">{session.user.email}</dd>
-        </div>
-        <div>
-          <dt className="text-sm font-medium text-[#6B7280]">Role</dt>
-          <dd className="text-lg text-[#1F2933]">{session.user.role}</dd>
-        </div>
-        <div>
-          <dt className="text-sm font-medium text-[#6B7280]">Organization</dt>
-          <dd className="text-lg text-[#1F2933]">
-            {session.user.org || "Not set"}
-          </dd>
-        </div>
-      </dl>
-      <p className="mt-4 text-sm text-[#6B7280]">
-        Profile edit form lands in Week 04/05 with Chawanangwa&apos;s UI work.
+      <h1 className="mb-2 text-3xl font-bold text-[#1F2933]">Profile</h1>
+      <p className="mb-6 text-[#6B7280]">
+        View and update your name and organization contact details.
       </p>
+      <ProfileForm
+        name={user.name}
+        email={user.email}
+        role={user.role as Role}
+        org={user.org}
+      />
       <form action={logout} className="mt-6">
         <button
           type="submit"
