@@ -13,14 +13,17 @@ CareLoop Tracker follows a screening result from the day it is issued until the 
 - Next.js (App Router)
 - TypeScript (strict)
 - Tailwind CSS
-- Auth.js v5 (planned) / Clerk alternative
-- PostgreSQL + Prisma (planned)
+- Auth.js v5 (Credentials + JWT sessions)
+- PostgreSQL + Prisma
 - Vercel hosting
 
 ## Getting Started
 
 ```bash
 npm install
+cp .env.example .env.local
+# Set DATABASE_URL and AUTH_SECRET in .env.local
+npx prisma db push
 npm run dev
 ```
 
@@ -30,7 +33,16 @@ Open http://localhost:3000
 npm run lint
 npm run format
 npm run build
+npm run db:generate
+npm run db:push
 ```
+
+### Auth routes (Week 04)
+
+- `/register` — create account with role (`coordinator` | `clinician` | `lab_staff`)
+- `/login` — sign in
+- `/profile` — view session profile + sign out
+- `/cases` — protected placeholder (list/detail owned by teammate PR)
 
 ## Workflow
 
