@@ -1,0 +1,125 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  COORDINATOR
+  CLINICIAN
+  LAB_STAFF
+}
+
+enum AccountStatus {
+  pending
+  active
+  rejected
+}
+
+enum CaseStatus {
+  OPEN
+  REFERRED
+  CLOSED
+}
+
+enum ReferralStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  CANCELLED
+}
+
+enum TimelineEventType {
+  CREATED
+  UPDATED
+  REFERRAL_SENT
+  REFERRAL_ACCEPTED
+  REFERRAL_REJECTED
+  REFERRAL_CANCELLED
+  NOTE
+  CLOSED
+}
+
+model User {
+  id                 String        @id @default(cuid())
+  name               String
+  email              String        @unique
+  passwordHash       String
+  role               Role?
+  requestedRole      Role
+  status             AccountStatus @default(active)
+  org                String?
+  mustChangePassword Boolean       @default(false)
+  failedLoginCount   Int           @default(0)
+  lockedUntil        DateTime?
+  approvedById       String?
+  approvedBy         User?         @relation("AccountApprovals", fields: [approvedById], references: [id], onDelete: SetNull)
+  approvedAt         DateTime?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  approvedAccounts  User[]          @relation("AccountApprovals")
+  ownedCases        Case[]          @relation("CaseOwner")
+  closedCases       Case[]          @relation("CaseClosedBy")
+  referralsSent     Referral[]      @relation("ReferralFrom")
+  referralsReceived Referral[]      @relation("ReferralTo")
+  timelineEvents    TimelineEvent[]
+
+  @@index([status])
+  @@index([approvedById])
+}
+
+model Case {
+  id             String     @id @default(cuid())
+  patientCode    String
+  resultIssuedAt DateTime
+  status         CaseStatus @default(OPEN)
+  // Needed for the "overdue" filter in the coordinator queue (Week 05).
+  nextStepDueAt  DateTime?
+  // Optional so a case can be "unassigned".
+  ownerId        String?
+  owner          User?      @relation("CaseOwner", fields: [ownerId], references: [id])
+  closureNote    String?
+  closedById     String?
+  closedBy       User?      @relation("CaseClosedBy", fields: [closedById], references: [id])
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  referrals Referral[]
+  timeline  TimelineEvent[]
+
+  @@index([status])
+  @@index([ownerId])
+}
+
+model Referral {
+  id         String         @id @default(cuid())
+  caseId     String
+  case       Case           @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  fromUserId String
+  fromUser   User           @relation("ReferralFrom", fields: [fromUserId], references: [id])
+  toUserId   String
+  toUser     User           @relation("ReferralTo", fields: [toUserId], references: [id])
+  status     ReferralStatus @default(PENDING)
+  notes      String?
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+
+  @@index([caseId])
+  @@index([toUserId, status])
+}
+
+model TimelineEvent {
+  id          String            @id @default(cuid())
+  caseId      String
+  case        Case              @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  type        TimelineEventType
+  message     String
+  createdById String
+  createdBy   User              @relation(fields: [createdById], references: [id])
+  createdAt   DateTime          @default(now())
+
+  @@index([caseId, createdAt])
+}

@@ -4,16 +4,16 @@
 
 ### MVP routes
 
-| Route | Purpose | Week 04 priority |
-|-------|---------|------------------|
-| `/` | Landing / purpose | Medium |
-| `/login`, `/register` | Auth | **High** |
-| `/profile` | Profile CRUD + logout | **High** |
-| `/cases` | List cases | **High** |
-| `/cases/new` | Create case | **High** |
-| `/cases/[id]` | Detail + timeline + referrals | High (detail first) |
-| `/coordinator` | Chase queue | Medium (Week 05) |
-| `/dashboard` | Light metrics | Later MVP |
+| Route                 | Purpose                       | Week 04 priority    |
+| --------------------- | ----------------------------- | ------------------- |
+| `/`                   | Landing / purpose             | Medium              |
+| `/login`, `/register` | Auth                          | **High**            |
+| `/profile`            | Profile CRUD + logout         | **High**            |
+| `/cases`              | List cases                    | **High**            |
+| `/cases/new`          | Create case                   | **High**            |
+| `/cases/[id]`         | Detail + timeline + referrals | High (detail first) |
+| `/coordinator`        | Chase queue                   | Medium (Week 05)    |
+| `/dashboard`          | Light metrics                 | Later MVP           |
 
 ### Reusable components (hierarchy)
 
@@ -77,15 +77,15 @@ AppShell
 
 ## Design theme & branding
 
-| Token | Value | Use |
-|-------|-------|-----|
-| Primary | `#0F6B6B` (deep teal) | Header, primary buttons, links |
-| Accent | `#E07A5F` (soft coral) | Overdue / rejected alerts |
-| Ink | `#1F2933` | Body text |
-| Muted | `#6B7280` | Secondary text |
-| Paper | `#F7FAFC` | Page background |
-| Typography | Source Sans 3 | UI body + headings |
-| Layout | `max-w-5xl`, `px-4`, `gap-4/6` | Consistent spacing |
-| UI approach | Tailwind utility classes; shared status badges | No heavy card chrome |
+| Token       | Value                                          | Use                            |
+| ----------- | ---------------------------------------------- | ------------------------------ |
+| Primary     | `#0F6B6B` (deep teal)                          | Header, primary buttons, links |
+| Accent      | `#E07A5F` (soft coral)                         | Overdue / rejected alerts      |
+| Ink         | `#1F2933`                                      | Body text                      |
+| Muted       | `#6B7280`                                      | Secondary text                 |
+| Paper       | `#F7FAFC`                                      | Page background                |
+| Typography  | Source Sans 3                                  | UI body + headings             |
+| Layout      | `max-w-5xl`, `px-4`, `gap-4/6`                 | Consistent spacing             |
+| UI approach | Tailwind utility classes; shared status badges | No heavy card chrome           |
 
 Tone: calm, clinical, trustworthy — suitable for coordinators and clinicians.
