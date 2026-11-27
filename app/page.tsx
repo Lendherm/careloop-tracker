@@ -1,10 +1,26 @@
+// import header from "components/header;
+import { Suspense } from "react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+
 export default function Home() {
   return (
     <main className="mx-auto flex min-h-screen max-w-3xl flex-col justify-center gap-6 px-6 py-16">
+      <div className="flex ">
+        <Suspense
+          fallback={
+            <span className="text-sm text-slate-600" role="status">
+              Loading account...
+            </span>
+          }
+        >
+          <Header />
+        </Suspense>
+      </div>
       <p className="text-sm font-semibold uppercase tracking-wide text-sky-800">
         WDD 430 Team Project
       </p>
-      <h1 className="text-4xl font-bold text-slate-900">CareLoop Tracker</h1>
+
       <p className="text-lg text-slate-700">
         Follow a screening result from the day it is issued until treatment or
         closure. Every case has one named owner; overdue, rejected, and
@@ -21,6 +37,7 @@ export default function Home() {
         <code>docs/specification.md</code> and <code>docs/constitution.md</code>
         .
       </p>
+      <Footer />
     </main>
   );
 }
